@@ -1,41 +1,30 @@
 import React from "react";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
-import HomeScreen from "../screens/HomeScreen";
-import DetailScreen from "../screens/DetailScreen";
 
-const FoodStack = createStackNavigator();
-
-const AppNavigator = () => {
-  return (
-    <NavigationContainer>
-      <FoodStack.Navigator>
-        <FoodStack.Screen name="Home" component={HomeScreen} />
-        <FoodStack.Screen name="Detail" component={DetailScreen} />
-      </FoodStack.Navigator>
-    </NavigationContainer>
-  );
-};
-
-export default AppNavigator;
-import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
 import HomeScreen from "../screens/HomeScreen";
 import DetailScreen from "../screens/DetailScreen";
 import COLORS from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
-import Profile from "../screens/Profile";
+import BioScreen from "../screens/BioScreen";
+import PersonalScreen from "../screens/PersonalScreen";
+import AccountScreen from "../screens/AccountSetting";
+import SettingScreen from "../screens/SettingScreen";
 
 const FoodStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 const Tab = createBottomTabNavigator();
+const ProfileTabs = createMaterialTopTabNavigator();
+const Drawer = createDrawerNavigator();
 
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <TabNavigator />
+      <DrawerNavigator />
     </NavigationContainer>
   );
 };
@@ -51,8 +40,25 @@ const FoodStackNavigator = () => {
 
 const ProfileStackNavigator = () => {
   return (
-    <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={Profile} />
+    <ProfileStack.Navigator
+      screenOptions={{
+        headerTitleAlign: "center",
+      }}
+    >
+      <ProfileStack.Screen
+        name="Profile"
+        component={ProfileTabsNavigator}
+        options={({ navigation, route }) => ({
+          headerLeft: (props) => (
+            <Ionicons
+              name="menu"
+              onPress={() => navigation.openDrawer()}
+              size={30}
+              style={{ paddingLeft: 10 }}
+            />
+          ),
+        })}
+      />
     </ProfileStack.Navigator>
   );
 };
@@ -60,6 +66,7 @@ const ProfileStackNavigator = () => {
 const TabNavigator = () => {
   return (
     <Tab.Navigator
+      initialRouteName="Home"
       tabBarOptions={{
         activeTintColor: COLORS.primary,
         showLabel: false,
@@ -95,6 +102,11 @@ const TabNavigator = () => {
         name="Favourite"
         component={FoodStackNavigator}
         options={{
+          tabBarBadge: "22",
+          tabBarBadgeStyle: {
+            backgroundColor: COLORS.primary,
+            fontSize: 9,
+          },
           tabBarIcon: ({ focused, color, size }) => {
             if (focused) {
               return <Ionicons name="heart" size={24} color={COLORS.primary} />;
@@ -118,6 +130,27 @@ const TabNavigator = () => {
         }}
       />
     </Tab.Navigator>
+  );
+};
+
+const ProfileTabsNavigator = () => {
+  return (
+    <ProfileTabs.Navigator screenOptions={{}}>
+      <ProfileTabs.Screen name="Bio" component={BioScreen} options={{}} />
+      <ProfileTabs.Screen name="Personal" component={PersonalScreen} />
+      <ProfileTabs.Screen name="Contacts" component={PersonalScreen} />
+    </ProfileTabs.Navigator>
+  );
+};
+
+const DrawerNavigator = () => {
+  return (
+    <Drawer.Navigator drawerType="slide" initialRouteName="Home">
+      <Drawer.Screen name="Home" component={TabNavigator} />
+      <Drawer.Screen name="Account" component={AccountScreen} />
+      <Drawer.Screen name="Settings" component={SettingScreen} />
+      <Drawer.Screen name="Profile" component={ProfileStackNavigator} />
+    </Drawer.Navigator>
   );
 };
 

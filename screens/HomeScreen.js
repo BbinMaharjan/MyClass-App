@@ -18,8 +18,6 @@ const HomeScreen = (props) => {
         <Categories />
         <Title>Popular</Title>
         <Populars />
-        <Title>Popular</Title>
-        <Populars />
       </View>
     </ScrollView>
   );

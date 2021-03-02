@@ -43,7 +43,9 @@ const SpecialFoodItem = ({ food }) => {
           {" "}
           {food.title}{" "}
         </Title>
-        <Text style={styles.subtitle}>{food.subtitle}</Text>
+        <Text numberOfLines={1} ellipsizeMode="head" style={styles.subtitle}>
+          {food.subtitle}
+        </Text>
         <View style={styles.priceSection}>
           <View style={styles.priceSection}>
             {totalRating.map((rat, i) => {
@@ -86,9 +88,9 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
   },
   subtitle: {
-    fontSize: 12,
+    fontSize: 10,
     paddingLeft: 5,
-    fontFamily: "ubuntu",
+    fontFamily: "ubuntu-regular",
     color: "#666",
   },
   priceSection: {
