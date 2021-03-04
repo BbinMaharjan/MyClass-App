@@ -5,7 +5,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createStackNavigator } from "@react-navigation/stack";
 
 import HomeScreen from "../screens/HomeScreen";
-import SettingsScreen from "../screens/SettingsScreen";
+import SettingsScreen from "../screens/SettingScreen";
 import ProductsScreen from "../screens/ProductsScreen";
 
 import { MaterialIcons } from "@expo/vector-icons";
